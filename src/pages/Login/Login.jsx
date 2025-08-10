@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./Login.css";
 import logo from "../../assets/logo.png";
-import {login,
-  signUp
-} from "../../firebase";
+import { login, signUp } from "../../firebase";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [signState, setSignState] = useState("Sign In");
@@ -12,12 +11,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const user_auth = async (event) => {
     event.preventDefault();
-    if(signState === "Sign In"){
-      await login(email, password);
-    } else {
-      await signUp(name, email, password);
+    try {
+      if (signState === "Sign In") {
+        await login(email, password);
+      } else {
+        await signUp(name, email, password);
+      }
+    } catch (error) {
+      toast.error(error.message); // Muestra el mensaje de error al usuario
     }
-  }
+  };
 
   return (
     <div className="login">
@@ -26,13 +29,36 @@ const Login = () => {
         <h1>{signState}</h1>
         <form>
           {signState === "Sign Up" ? (
-            <input value={name} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Your Name" />
+            <input
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+              placeholder="Your Name"
+            />
           ) : (
             <></>
           )}
-          <input value={email} onChange={(e)=>{setEmail(e.target.value)}} type="email" placeholder="Email" />
-          <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" placeholder="Enter Password" />
-          <button onClick={user_auth} type="submit">{signState}</button>
+          <input
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            type="email"
+            placeholder="Email"
+          />
+          <input
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            type="password"
+            placeholder="Enter Password"
+          />
+          <button onClick={user_auth} type="submit">
+            {signState}
+          </button>
           <div className="form-help">
             <div className="remember">
               <input type="checkbox" />
