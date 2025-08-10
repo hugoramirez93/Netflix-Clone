@@ -59,7 +59,7 @@
 .form-help {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     color: #b3b3b3;
     font-size: 13px;
 }
@@ -73,5 +73,17 @@
 .remember input {
     width: 18px;
     height: 18px;
+}
+
+.form-switch{
+    margin-top: 40px;
+    color: #737373;
+}
+
+.form-switch span{
+    margin-left: 6px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
 }
 
